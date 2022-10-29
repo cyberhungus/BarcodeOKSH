@@ -10,7 +10,7 @@ namespace BarcodeOKSH
 {
 
 
-    internal class Person
+    public class Person
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -27,7 +27,9 @@ namespace BarcodeOKSH
 
         public string Address { get; set; }
 
+        public string govidnum { get; set; }
 
+        public string contactdetails { get; set; }
 
         public Person(string FirstName, string LastName, string PersonalID, DateTime DOB)
         {
@@ -46,6 +48,13 @@ namespace BarcodeOKSH
             this.LastName = LastName;
             this.PersonalID = PersonalID;
             
+        }
+
+        public Person() { }
+
+        public string getFullName()
+        {
+            return this.FirstName + " " + this.LastName;
         }
 
 

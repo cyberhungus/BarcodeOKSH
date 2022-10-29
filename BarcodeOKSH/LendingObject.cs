@@ -8,7 +8,8 @@ using Newtonsoft.Json;
 
 namespace BarcodeOKSH
 {
-    internal class LendingObject
+
+   public class LendingObject
     {
 
         public string name { get; set; }
@@ -18,19 +19,20 @@ namespace BarcodeOKSH
         public string status { get; set; }
         public string borrower { get; set; }
 
+        public string tags { get; set; }
 
+
+        public string staffmember { get; set; }
 
         const string FREE = "0";
         const string ONLEASE = "1";
         const string INREPAIR = "2"; 
-        
-
-
-        public LendingObject(string name, string code, string status) 
+        public LendingObject(string name, string code, string status, string tags)
         {
             this.name = name;
             this.code = code;
-            this.status = status; 
+            this.status = status;
+            this.tags = tags;
         }
 
         public LendingObject(string name, string code)
@@ -40,12 +42,13 @@ namespace BarcodeOKSH
 
         }
 
-        public LendingObject(string name, string code, string status, DateTime borrowedUntil)
+        public LendingObject(string name, string code, string status, string tags, DateTime borrowedUntil)
         {
             this.name = name;
             this.code = code;
             this.status = status;
             this.borrowedUntil = borrowedUntil;
+            this.tags = tags;
         }
 
 
