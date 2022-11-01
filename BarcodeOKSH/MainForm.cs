@@ -33,6 +33,9 @@ namespace BarcodeOKSH
             LendBox.Visible = false;
             IDCancelButton.Visible = false;
             dataBaseConnector = new SQLGetter();
+            this.Location = Screen.AllScreens[1].WorkingArea.Location;
+            this.Size = Screen.AllScreens[1].WorkingArea.Size;
+            this.WindowState = FormWindowState.Maximized;
         }
 
 
@@ -715,32 +718,20 @@ namespace BarcodeOKSH
 
         private void ShowNextMonthReturnButton_Click(object sender, EventArgs e)
         {
-            EventExplanationLabel.Text = "ZEIGT RÜCKGABEN IN DEN NÄCHSTEN 30 TAGEN AN";
-            EventListView.Items.Clear();
+           
+            //EventListView.Items.Clear();
             foreach (LendingObject obj in dataBaseConnector.selectObjectByReturnDate(makeDateTimeSQLString(DateTime.Now.AddDays(30))))
             {
                 if (obj.status != "0")
                 {
                     string[] row1 = { translateNumberStringToStatus(obj.status), dataBaseConnector.selectPersonByID(obj.borrower)[0].LastName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].FirstName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].PersonalID, makeStringFromDate(obj.borrowedUntil) };
-                    EventListView.Items.Add(obj.name).SubItems.AddRange(row1);
+                    //EventListView.Items.Add(obj.name).SubItems.AddRange(row1);
                 }
             }
         }
 
 
-        private void ShowOverdueButton_Click(object sender, EventArgs e)
-        {
-            EventExplanationLabel.Text = "ZEIGE ÜBERFÄLLIGE RÜCKGABEN AN";
-            EventListView.Items.Clear();
-            foreach (LendingObject obj in dataBaseConnector.selectLateObjects())
-            {
-                if (obj.status != "0")
-                {
-                    string[] row1 = { translateNumberStringToStatus(obj.status), dataBaseConnector.selectPersonByID(obj.borrower)[0].LastName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].FirstName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].PersonalID, makeStringFromDate(obj.borrowedUntil) };
-                    EventListView.Items.Add(obj.name).SubItems.AddRange(row1);
-                }
-            }
-        }
+
         public void SearchBorrowedByPersonButton_Click(object sender, EventArgs e)
         {
             PersonSearch personSearchForm = new PersonSearch(2);
@@ -756,7 +747,7 @@ namespace BarcodeOKSH
             {
                 DateSearchCheckBox.Checked = false;
                 SearchTimePicker.Visible = false;
-                EventExplanationLabel.Text = "ZEIGT RÜCKGABEN IN DEN NÄCHSTEN 30 TAGEN AN";
+                //EventExplanationLabel.Text = "ZEIGT RÜCKGABEN IN DEN NÄCHSTEN 30 TAGEN AN";
                 InventorySearchDropdown.SelectedIndex = 0;
                 InventorySearchResultListView.Items.Clear();
                 InventorySearchResultListView.Items.Clear();
@@ -778,57 +769,26 @@ namespace BarcodeOKSH
             //EVENTS
             else if (index == 3)
             {
-                EventListShower.Items.Clear();
-                ShowOverdueButton.Text = "Zeige verspätete (" + dataBaseConnector.selectLateObjects().Count + ")";
-                EventListView.Items.Clear();
-                List<DateTime> relevantDates = new List<DateTime>();
-                foreach (LendingObject obj in dataBaseConnector.selectObjectByReturnDate(makeDateTimeSQLString(DateTime.Now.AddDays(30))))
-                {
-                    if (obj.status != "0")
-                    {
-                        string[] row1 = { translateNumberStringToStatus(obj.status), dataBaseConnector.selectPersonByID(obj.borrower)[0].LastName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].FirstName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].PersonalID, makeStringFromDate(obj.borrowedUntil) };
-                        EventListView.Items.Add(obj.name).SubItems.AddRange(row1);
-                        relevantDates.Add(obj.borrowedUntil);
 
-                        
-                    }
-                }
-                EventCalendar.BoldedDates = relevantDates.ToArray();
-                Console.WriteLine("bold append" + EventCalendar.BoldedDates.Length.ToString());
-                DateTime lastDay = DateTime.Now.Date;
-                foreach (ReturnReserveEvent ev in sortEventsByDate(dataBaseConnector.generateEventsUntilDate(DateTime.Now.AddDays(30))))
-                {
-                    foreach ( DateTime dt in ev.relevantDates) {
-                        
-                       
-                          if (dt.Date > lastDay)
-                            {
-                            EventListShower.Groups.Add(new ListViewGroup(dt.Date.ToString(),HorizontalAlignment.Left));
-                            lastDay = dt;
-                            EventListShower.Items.Add(dt.Date.ToString() + ev.eventstring);
-                            // Adds the first item to the first group
-                            EventListShower.Items[0].Group = EventListShower.Groups[0];
-                            Console.WriteLine(EventListShower.Groups[0].Header);
-                        }
-                            else
-                            {
-
-                            }
-
-                        }
-                        // EventListShower.Items.Add(ev.eventstring);
-                        //                        Console.WriteLine("EventListShower" + ev.eventstring);
- 
-
-
-                    
-                    
-                }
             }
             //Admin
             else if (index == 6)
             {
                 DOBPicker.Value = DateTime.Now.AddYears(-12);
+                foreach (LendingObject obj in dataBaseConnector.selectLateObjects())
+                {
+
+                    if (obj.borrower != "" && obj.borrower != null)
+                    {
+                        string[] row1 = { translateNumberStringToStatus(obj.status), dataBaseConnector.selectPersonByID(obj.borrower)[0].LastName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].FirstName + "," + dataBaseConnector.selectPersonByID(obj.borrower)[0].PersonalID, makeStringFromDate(obj.borrowedUntil), obj.staffmember };
+                        BelatedItemList.Items.Add(obj.name).SubItems.AddRange(row1);
+                    }
+                    else
+                    {
+                        string[] row1 = { translateNumberStringToStatus(obj.status), "Verfügbar", "Nicht ausgeliehen", "Nicht ausgeliehen" };
+                        BelatedItemList.Items.Add(obj.name).SubItems.AddRange(row1);
+                    }
+                }
             }
 
             else if (index == 1)
@@ -840,8 +800,8 @@ namespace BarcodeOKSH
             else if (index == 2)
             {
                 //ShowOverdueButton.Text = "Zeige verspätete (" + dataBaseConnector.selectLateObjects().Count + ")";
-                ReservationDisplayListview.Clear();
-                ReservationDisplayTimePicker.Value = DateTime.Now.Date;
+                ReservationDisplayListview.Items.Clear();
+                ReservationDisplayTimePicker.Value = DateTime.Now.AddDays(14).Date;
                 foreach (Reservation res in dataBaseConnector.selectReservationsActiveOnDate(ReservationDisplayTimePicker.Value))
                 {
                     
@@ -864,10 +824,9 @@ namespace BarcodeOKSH
             List<(DateTime date, ReturnReserveEvent ev)> SortList = new List<(DateTime date, ReturnReserveEvent ev)>();
             foreach (ReturnReserveEvent e in inp)
             {
-               foreach (DateTime date in e.relevantDates)
-                {
-                    SortList.Add((date, e));
-                }
+
+                    SortList.Add((e.eventdate, e));
+                
             }
             SortList.Sort((u1, u2) => u1.date.CompareTo(u2.date));
 
@@ -1012,8 +971,7 @@ namespace BarcodeOKSH
 
             if (checkIfUserExists(RoomBookingUserIDTextbox.Text))
             {
-                RoomSelectForm rsform = new RoomSelectForm(RoomBookingUserIDTextbox.Text);
-                rsform.ShowDialog();
+             
             }
         }
 
@@ -1042,13 +1000,15 @@ namespace BarcodeOKSH
 
         private void ReservationDisplayTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            ReservationDisplayListview.Clear();
-            foreach (Reservation res in dataBaseConnector.selectReservationsActiveOnDate(ReservationDisplayTimePicker.Value))
+            ReservationDisplayListview.Items.Clear();
+            List<Reservation> ress = dataBaseConnector.selectReservationsActiveOnDate(ReservationDisplayTimePicker.Value);
+            Console.WriteLine("RESS COUNT " + ress.Count);
+            foreach (Reservation res in ress)
             {
 
-                string[] row1 = { res.enddate.ToString(), res.borrower.getFullName(), Helpers.makeStringFromReservationItems(res.objects), res.staffmember };
+                string[] row1 = { res.enddate.ToString(), res.borrower.getFullName(), "OBJ", res.staffmember };
                 ReservationDisplayListview.Items.Add(res.startdate.ToString()).SubItems.AddRange(row1);
-
+                Console.WriteLine("RESS COUNT " + "ADDED ITEM");
             }
         }
 

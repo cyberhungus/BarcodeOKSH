@@ -6,22 +6,31 @@ using System.Threading.Tasks;
 
 namespace BarcodeOKSH
 {
-    internal class ReturnReserveEvent
+    public class ReturnReserveEvent
     {
         public string eventstring = "";
-       public List<DateTime> relevantDates = new List<DateTime>();
-        public ReturnReserveEvent(Reservation res)
+        public DateTime startDate = DateTime.Now;
+        public DateTime endDate = DateTime.Now;
+        public DateTime eventdate = DateTime.Now;
+        public string type = "";
+        public ReturnReserveEvent(Reservation res, DateTime date)
         {
-            relevantDates.AddRange( Helpers.datesBetweenDates(res.startdate, res.enddate));
-            eventstring = "Reserviert durch " + res.borrower.getFullName() + ":" + res.makeItemsString()+ res.startdate.ToString() + " bis "+  res.enddate.ToString();
+            startDate = res.startdate;
+            endDate =   res.enddate;
+            this.eventdate = date;
+            type = "RES";
+            eventstring = "Reserviert durch " + res.borrower.getFullName() + ":" + res.makeItemNameString()+ res.startdate.ToString() + " bis "+  res.enddate.ToString();
         }
         
 
         
-        public ReturnReserveEvent(LendingObject obj)
+        public ReturnReserveEvent(LendingObject obj, DateTime date)
         {
-            relevantDates.AddRange(Helpers.datesBetweenDates(DateTime.Now, obj.borrowedUntil));
-            eventstring = obj.name +" ausgeliehen durch " + new SQLGetter().selectPersonByID(obj.borrower)[0] + " bis " + obj.borrowedUntil.ToString();
+            startDate = obj.borrowedOn;
+            endDate = obj.borrowedUntil;
+            this.eventdate = date;
+            type = "OBJ";
+            eventstring = obj.name + " an " + new SQLGetter().selectPersonByID(obj.borrower)[0].getFullName() + " bis " + obj.borrowedUntil.ToString();
         }
 
 

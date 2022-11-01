@@ -133,6 +133,30 @@ namespace BarcodeOKSH
 
         }
 
+
+        public static List<ReturnReserveEvent> sortEventsByDate(List<ReturnReserveEvent> inp)
+        {
+            List<ReturnReserveEvent> ret = new List<ReturnReserveEvent>();
+            List<(DateTime date, ReturnReserveEvent ev)> SortList = new List<(DateTime date, ReturnReserveEvent ev)>();
+            foreach (ReturnReserveEvent e in inp)
+            {
+
+                SortList.Add((e.eventdate, e));
+
+            }
+            SortList.Sort((u1, u2) => u1.date.CompareTo(u2.date));
+
+
+            foreach (var v in SortList)
+            {
+
+                ret.Add(v.ev);
+                Console.WriteLine("Sorted list " + v.ev.eventstring);
+            }
+
+            return ret;
+        }
+
         public static string makeStringFromReservationItems(List<LendingObject> input)
         {
             string toreturn = "";

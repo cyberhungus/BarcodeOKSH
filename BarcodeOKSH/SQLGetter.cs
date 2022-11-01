@@ -351,10 +351,11 @@ namespace BarcodeOKSH
             {
 
                 MySqlCommand comm = connection.CreateCommand();
-                comm.CommandText = "UPDATE objects SET borrower=@personid,borrstatus=1,borroweduntil=@returndate,staffmember=@staffmember WHERE barcode=@objectid;";
+                comm.CommandText = "UPDATE objects SET borrower=@personid,borrstatus=1,borrowedon = @nowdate , borroweduntil=@returndate,staffmember=@staffmember WHERE barcode=@objectid;";
                 comm.Parameters.AddWithValue("@personid", personid);
                 comm.Parameters.AddWithValue("@objectid", objectid);
                 comm.Parameters.AddWithValue("@returndate", datestring);
+                comm.Parameters.AddWithValue("@nowdate", Helpers.makeDateTimeSQLString(DateTime.Now));
                 comm.Parameters.AddWithValue("@staffmember", staffmember);
                 Console.WriteLine("Lending object query" + comm.CommandText);
                 comm.ExecuteNonQuery();
@@ -421,8 +422,8 @@ namespace BarcodeOKSH
             {
                 cutoffdate = "'"+cutoffdate+"'";
 
-                string query = "SELECT * FROM objects WHERE borroweduntil<=" + cutoffdate+ " AND borroweduntil > '" + Helpers.makeDateTimeSQLString(DateTime.Now) + "';";
-                    Console.WriteLine(query);
+                string query = "SELECT * FROM objects WHERE borroweduntil<=" + cutoffdate+ " AND borroweduntil > '" + Helpers.makeDateTimeSQLString(DateTime.Now) + "' AND borrstatus = '1';";
+                    Console.WriteLine("selectobjectbyreturndate query" + query);
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -1012,7 +1013,7 @@ namespace BarcodeOKSH
             }
            toReturn.enddate = reader.GetDateTime("enddate");
             //toReturn.enddate = Helpers.makeDateFromString(enddatestring.Split(' ')[0]);
-            string startdatestring = reader["startdate"].ToString();
+            
             toReturn.startdate = reader.GetDateTime("startdate");
 
 
@@ -1196,11 +1197,19 @@ namespace BarcodeOKSH
             List<ReturnReserveEvent> events = new List<ReturnReserveEvent>();
             foreach (LendingObject lendingObject in objects)
             {
-                events.Add(new ReturnReserveEvent(lendingObject));
+                foreach (DateTime dt in Helpers.datesBetweenDates(DateTime.Now.Date, lendingObject.borrowedUntil))
+                {
+                    events.Add(new ReturnReserveEvent(lendingObject, dt));
+                }
+
             }
             foreach (Reservation reservation in reservations)
             {
-                events.Add(new ReturnReserveEvent(reservation));
+                foreach (DateTime dt in Helpers.datesBetweenDates(reservation.startdate, reservation.enddate))
+                {
+                    events.Add(new ReturnReserveEvent(reservation, dt));
+                }
+               // events.Add(new ReturnReserveEvent(reservation));
             }
             return events;
 

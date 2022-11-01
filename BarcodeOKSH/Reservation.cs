@@ -38,6 +38,17 @@ namespace BarcodeOKSH
             return toreturn;
         }
 
+        public string makeItemNameString()
+        {
+            string toreturn = "";
+            foreach (LendingObject item in objects)
+            {
+                toreturn += item.name;
+                toreturn += ":";
+            }
+            return toreturn;
+        }
+
 
         public override string ToString()
         {

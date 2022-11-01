@@ -76,16 +76,7 @@ namespace BarcodeOKSH
             this.ReservationUserIDTextBox = new System.Windows.Forms.TextBox();
             this.ReservationButton = new System.Windows.Forms.Button();
             this.Calendar = new System.Windows.Forms.TabPage();
-            this.EventListShower = new System.Windows.Forms.ListView();
-            this.EventCalendar = new System.Windows.Forms.MonthCalendar();
-            this.EventExplanationLabel = new System.Windows.Forms.Label();
-            this.ShowOverdueButton = new System.Windows.Forms.Button();
-            this.ShowNextMonthReturnButton = new System.Windows.Forms.Button();
-            this.EventListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CalendarElement = new BarcodeOKSH.CalendarElement();
             this.checkObjectsTab = new System.Windows.Forms.TabPage();
             this.DateSearchCheckBox = new System.Windows.Forms.CheckBox();
             this.SearchTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -105,6 +96,13 @@ namespace BarcodeOKSH
             this.RoomBookingUserIDTextbox = new System.Windows.Forms.TextBox();
             this.RoomSelectButton = new System.Windows.Forms.Button();
             this.AdminTab = new System.Windows.Forms.TabPage();
+            this.BelatedItemBox = new System.Windows.Forms.GroupBox();
+            this.BelatedItemList = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ObjAddTagsTextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -114,7 +112,6 @@ namespace BarcodeOKSH
             this.LabelObjCode = new System.Windows.Forms.Label();
             this.LabelObjName = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.AddPersonAddressTextbox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.AddPersonContactTextbox = new System.Windows.Forms.TextBox();
@@ -140,12 +137,14 @@ namespace BarcodeOKSH
             this.checkObjectsTab.SuspendLayout();
             this.Räume.SuspendLayout();
             this.AdminTab.SuspendLayout();
+            this.BelatedItemBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // Root
             // 
+            this.Root.CausesValidation = false;
             this.Root.Controls.Add(this.Lend);
             this.Root.Controls.Add(this.Return);
             this.Root.Controls.Add(this.Reservations);
@@ -153,10 +152,11 @@ namespace BarcodeOKSH
             this.Root.Controls.Add(this.checkObjectsTab);
             this.Root.Controls.Add(this.Räume);
             this.Root.Controls.Add(this.AdminTab);
-            this.Root.Location = new System.Drawing.Point(4, 12);
+            this.Root.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Root.Location = new System.Drawing.Point(0, 0);
             this.Root.Name = "Root";
             this.Root.SelectedIndex = 0;
-            this.Root.Size = new System.Drawing.Size(2248, 1323);
+            this.Root.Size = new System.Drawing.Size(3112, 1769);
             this.Root.TabIndex = 0;
             this.Root.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.Root_Selecting);
             // 
@@ -167,13 +167,14 @@ namespace BarcodeOKSH
             this.Lend.Location = new System.Drawing.Point(10, 48);
             this.Lend.Name = "Lend";
             this.Lend.Padding = new System.Windows.Forms.Padding(3);
-            this.Lend.Size = new System.Drawing.Size(2228, 1265);
+            this.Lend.Size = new System.Drawing.Size(3092, 1711);
             this.Lend.TabIndex = 0;
             this.Lend.Text = "Verleih";
             this.Lend.UseVisualStyleBackColor = true;
             // 
             // LendBox
             // 
+            this.LendBox.CausesValidation = false;
             this.LendBox.Controls.Add(this.DeleteBorrowItemButton);
             this.LendBox.Controls.Add(this.label8);
             this.LendBox.Controls.Add(this.LendListBox);
@@ -183,9 +184,10 @@ namespace BarcodeOKSH
             this.LendBox.Controls.Add(this.Obj_Entry_Button);
             this.LendBox.Controls.Add(this.IDCancelButton);
             this.LendBox.Controls.Add(this.Obj_Entry_Box);
-            this.LendBox.Location = new System.Drawing.Point(13, 105);
+            this.LendBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.LendBox.Location = new System.Drawing.Point(3, 591);
             this.LendBox.Name = "LendBox";
-            this.LendBox.Size = new System.Drawing.Size(2166, 1117);
+            this.LendBox.Size = new System.Drawing.Size(3086, 1117);
             this.LendBox.TabIndex = 3;
             this.LendBox.TabStop = false;
             this.LendBox.Text = "Verleihen";
@@ -301,18 +303,20 @@ namespace BarcodeOKSH
             this.ID_Box.Controls.Add(this.ScanCardLabel);
             this.ID_Box.Controls.Add(this.IDConfirmButton);
             this.ID_Box.Controls.Add(this.ID_Entry);
-            this.ID_Box.Location = new System.Drawing.Point(13, 7);
+            this.ID_Box.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ID_Box.Location = new System.Drawing.Point(3, 3);
             this.ID_Box.Name = "ID_Box";
-            this.ID_Box.Size = new System.Drawing.Size(2209, 100);
+            this.ID_Box.Size = new System.Drawing.Size(3086, 135);
             this.ID_Box.TabIndex = 4;
             this.ID_Box.TabStop = false;
             this.ID_Box.Text = "ID-Entry";
             // 
             // SearchPersonButton
             // 
-            this.SearchPersonButton.Location = new System.Drawing.Point(1738, 14);
+            this.SearchPersonButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.SearchPersonButton.Location = new System.Drawing.Point(2618, 34);
             this.SearchPersonButton.Name = "SearchPersonButton";
-            this.SearchPersonButton.Size = new System.Drawing.Size(465, 79);
+            this.SearchPersonButton.Size = new System.Drawing.Size(465, 98);
             this.SearchPersonButton.TabIndex = 3;
             this.SearchPersonButton.Text = "Person suchen";
             this.SearchPersonButton.UseVisualStyleBackColor = true;
@@ -357,7 +361,7 @@ namespace BarcodeOKSH
             this.Return.Location = new System.Drawing.Point(10, 48);
             this.Return.Name = "Return";
             this.Return.Padding = new System.Windows.Forms.Padding(3);
-            this.Return.Size = new System.Drawing.Size(2228, 1265);
+            this.Return.Size = new System.Drawing.Size(3092, 1711);
             this.Return.TabIndex = 1;
             this.Return.Text = "Rückgabe";
             this.Return.UseVisualStyleBackColor = true;
@@ -462,7 +466,7 @@ namespace BarcodeOKSH
             this.Reservations.Controls.Add(this.ReservationButton);
             this.Reservations.Location = new System.Drawing.Point(10, 48);
             this.Reservations.Name = "Reservations";
-            this.Reservations.Size = new System.Drawing.Size(2228, 1265);
+            this.Reservations.Size = new System.Drawing.Size(3092, 1711);
             this.Reservations.TabIndex = 6;
             this.Reservations.Text = "Vormerken";
             this.Reservations.UseVisualStyleBackColor = true;
@@ -546,103 +550,23 @@ namespace BarcodeOKSH
             // 
             // Calendar
             // 
-            this.Calendar.Controls.Add(this.EventListShower);
-            this.Calendar.Controls.Add(this.EventCalendar);
-            this.Calendar.Controls.Add(this.EventExplanationLabel);
-            this.Calendar.Controls.Add(this.ShowOverdueButton);
-            this.Calendar.Controls.Add(this.ShowNextMonthReturnButton);
-            this.Calendar.Controls.Add(this.EventListView);
+            this.Calendar.Controls.Add(this.CalendarElement);
             this.Calendar.Location = new System.Drawing.Point(10, 48);
             this.Calendar.Name = "Calendar";
             this.Calendar.Padding = new System.Windows.Forms.Padding(3);
-            this.Calendar.Size = new System.Drawing.Size(2228, 1265);
+            this.Calendar.Size = new System.Drawing.Size(3092, 1711);
             this.Calendar.TabIndex = 2;
             this.Calendar.Text = "Ereignisse";
             this.Calendar.UseVisualStyleBackColor = true;
             // 
-            // EventListShower
+            // CalendarElement
             // 
-            this.EventListShower.HideSelection = false;
-            this.EventListShower.Location = new System.Drawing.Point(513, 427);
-            this.EventListShower.Name = "EventListShower";
-            this.EventListShower.Size = new System.Drawing.Size(1709, 835);
-            this.EventListShower.TabIndex = 6;
-            this.EventListShower.UseCompatibleStateImageBehavior = false;
-            this.EventListShower.View = System.Windows.Forms.View.List;
-            // 
-            // EventCalendar
-            // 
-            this.EventCalendar.CalendarDimensions = new System.Drawing.Size(1, 3);
-            this.EventCalendar.Location = new System.Drawing.Point(12, 134);
-            this.EventCalendar.Name = "EventCalendar";
-            this.EventCalendar.TabIndex = 5;
-            // 
-            // EventExplanationLabel
-            // 
-            this.EventExplanationLabel.AutoSize = true;
-            this.EventExplanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EventExplanationLabel.Location = new System.Drawing.Point(418, 28);
-            this.EventExplanationLabel.Name = "EventExplanationLabel";
-            this.EventExplanationLabel.Size = new System.Drawing.Size(1305, 58);
-            this.EventExplanationLabel.TabIndex = 4;
-            this.EventExplanationLabel.Text = "ZEIGT RÜCKGABEN IN DEN NÄCHSTEN 30 TAGEN AN";
-            // 
-            // ShowOverdueButton
-            // 
-            this.ShowOverdueButton.Location = new System.Drawing.Point(1906, 6);
-            this.ShowOverdueButton.Name = "ShowOverdueButton";
-            this.ShowOverdueButton.Size = new System.Drawing.Size(316, 116);
-            this.ShowOverdueButton.TabIndex = 3;
-            this.ShowOverdueButton.Text = "Zeige verspätete";
-            this.ShowOverdueButton.UseVisualStyleBackColor = true;
-            this.ShowOverdueButton.Click += new System.EventHandler(this.ShowOverdueButton_Click);
-            // 
-            // ShowNextMonthReturnButton
-            // 
-            this.ShowNextMonthReturnButton.Location = new System.Drawing.Point(6, 6);
-            this.ShowNextMonthReturnButton.Name = "ShowNextMonthReturnButton";
-            this.ShowNextMonthReturnButton.Size = new System.Drawing.Size(316, 116);
-            this.ShowNextMonthReturnButton.TabIndex = 2;
-            this.ShowNextMonthReturnButton.Text = "Zeige nächsten Monat";
-            this.ShowNextMonthReturnButton.UseVisualStyleBackColor = true;
-            this.ShowNextMonthReturnButton.Click += new System.EventHandler(this.ShowNextMonthReturnButton_Click);
-            // 
-            // EventListView
-            // 
-            this.EventListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-            this.EventListView.FullRowSelect = true;
-            this.EventListView.GridLines = true;
-            this.EventListView.HideSelection = false;
-            this.EventListView.Location = new System.Drawing.Point(513, 117);
-            this.EventListView.Name = "EventListView";
-            this.EventListView.Size = new System.Drawing.Size(1241, 304);
-            this.EventListView.TabIndex = 1;
-            this.EventListView.UseCompatibleStateImageBehavior = false;
-            this.EventListView.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 214;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Status";
-            this.columnHeader2.Width = 158;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Ausgeliehen von";
-            this.columnHeader3.Width = 308;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Rückgabe am";
-            this.columnHeader4.Width = 402;
+            this.CalendarElement.AutoSize = true;
+            this.CalendarElement.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CalendarElement.Location = new System.Drawing.Point(3, 3);
+            this.CalendarElement.Name = "CalendarElement";
+            this.CalendarElement.Size = new System.Drawing.Size(3086, 1705);
+            this.CalendarElement.TabIndex = 7;
             // 
             // checkObjectsTab
             // 
@@ -657,7 +581,7 @@ namespace BarcodeOKSH
             this.checkObjectsTab.Location = new System.Drawing.Point(10, 48);
             this.checkObjectsTab.Name = "checkObjectsTab";
             this.checkObjectsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.checkObjectsTab.Size = new System.Drawing.Size(2228, 1265);
+            this.checkObjectsTab.Size = new System.Drawing.Size(3092, 1711);
             this.checkObjectsTab.TabIndex = 4;
             this.checkObjectsTab.Text = "Inventar Durchsuchen";
             this.checkObjectsTab.UseVisualStyleBackColor = true;
@@ -782,7 +706,7 @@ namespace BarcodeOKSH
             this.Räume.Controls.Add(this.RoomSelectButton);
             this.Räume.Location = new System.Drawing.Point(10, 48);
             this.Räume.Name = "Räume";
-            this.Räume.Size = new System.Drawing.Size(2228, 1265);
+            this.Räume.Size = new System.Drawing.Size(3092, 1711);
             this.Räume.TabIndex = 5;
             this.Räume.Text = "Räume";
             this.Räume.UseVisualStyleBackColor = true;
@@ -817,18 +741,72 @@ namespace BarcodeOKSH
             // 
             // AdminTab
             // 
+            this.AdminTab.Controls.Add(this.BelatedItemBox);
             this.AdminTab.Controls.Add(this.groupBox3);
             this.AdminTab.Controls.Add(this.groupBox2);
             this.AdminTab.Location = new System.Drawing.Point(10, 48);
             this.AdminTab.Name = "AdminTab";
             this.AdminTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AdminTab.Size = new System.Drawing.Size(2228, 1265);
+            this.AdminTab.Size = new System.Drawing.Size(3092, 1711);
             this.AdminTab.TabIndex = 3;
             this.AdminTab.Text = "Verwaltung";
             this.AdminTab.UseVisualStyleBackColor = true;
             // 
+            // BelatedItemBox
+            // 
+            this.BelatedItemBox.AutoSize = true;
+            this.BelatedItemBox.Controls.Add(this.BelatedItemList);
+            this.BelatedItemBox.Location = new System.Drawing.Point(2232, 18);
+            this.BelatedItemBox.Name = "BelatedItemBox";
+            this.BelatedItemBox.Size = new System.Drawing.Size(1495, 1247);
+            this.BelatedItemBox.TabIndex = 4;
+            this.BelatedItemBox.TabStop = false;
+            this.BelatedItemBox.Text = "Versäumte Rückgaben";
+            // 
+            // BelatedItemList
+            // 
+            this.BelatedItemList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader23});
+            this.BelatedItemList.GridLines = true;
+            this.BelatedItemList.HideSelection = false;
+            this.BelatedItemList.Location = new System.Drawing.Point(6, 49);
+            this.BelatedItemList.Name = "BelatedItemList";
+            this.BelatedItemList.Size = new System.Drawing.Size(1483, 1148);
+            this.BelatedItemList.TabIndex = 6;
+            this.BelatedItemList.UseCompatibleStateImageBehavior = false;
+            this.BelatedItemList.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Objekt";
+            this.columnHeader1.Width = 214;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Status";
+            this.columnHeader2.Width = 158;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Ausgeliehen von";
+            this.columnHeader3.Width = 308;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Rückgabe am";
+            this.columnHeader4.Width = 402;
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "VerliehenDurch";
+            // 
             // groupBox3
             // 
+            this.groupBox3.AutoSize = true;
             this.groupBox3.Controls.Add(this.ObjAddTagsTextbox);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.ObjAddButton);
@@ -903,7 +881,7 @@ namespace BarcodeOKSH
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.monthCalendar1);
+            this.groupBox2.AutoSize = true;
             this.groupBox2.Controls.Add(this.AddPersonAddressTextbox);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.AddPersonContactTextbox);
@@ -925,12 +903,6 @@ namespace BarcodeOKSH
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Person hinzufügen";
-            // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(227, 593);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 15;
             // 
             // AddPersonAddressTextbox
             // 
@@ -1059,12 +1031,14 @@ namespace BarcodeOKSH
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2264, 1347);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(3112, 1769);
             this.Controls.Add(this.Root);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Ausleihsystem OKSH";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyReader_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyReader_KeyPress);
             this.Root.ResumeLayout(false);
@@ -1084,6 +1058,8 @@ namespace BarcodeOKSH
             this.Räume.ResumeLayout(false);
             this.Räume.PerformLayout();
             this.AdminTab.ResumeLayout(false);
+            this.AdminTab.PerformLayout();
+            this.BelatedItemBox.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1152,11 +1128,6 @@ namespace BarcodeOKSH
         private System.Windows.Forms.Button ReturnRepairButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker ReturnDateTimePicker;
-        private System.Windows.Forms.ListView EventListView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ListView InventorySearchResultListView;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
@@ -1171,8 +1142,6 @@ namespace BarcodeOKSH
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader14;
         private System.Windows.Forms.Button SearchPersonButton;
-        private System.Windows.Forms.Button ShowOverdueButton;
-        private System.Windows.Forms.Button ShowNextMonthReturnButton;
         private System.Windows.Forms.Button SearchBorrowedByPersonButton;
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.TextBox ObjAddTagsTextbox;
@@ -1183,7 +1152,6 @@ namespace BarcodeOKSH
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox AddPersonAddressTextbox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label EventExplanationLabel;
         private System.Windows.Forms.CheckBox DateSearchCheckBox;
         private System.Windows.Forms.DateTimePicker SearchTimePicker;
         private System.Windows.Forms.ColumnHeader columnHeader16;
@@ -1205,9 +1173,14 @@ namespace BarcodeOKSH
         private System.Windows.Forms.ColumnHeader columnHeader22;
         private System.Windows.Forms.DateTimePicker ReservationDisplayTimePicker;
         private System.Windows.Forms.Button DeleteBorrowItemButton;
-        private System.Windows.Forms.MonthCalendar EventCalendar;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
-        private System.Windows.Forms.ListView EventListShower;
+        private CalendarElement CalendarElement;
+        private System.Windows.Forms.GroupBox BelatedItemBox;
+        private System.Windows.Forms.ListView BelatedItemList;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader23;
     }
 
 
