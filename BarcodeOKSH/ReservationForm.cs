@@ -29,7 +29,10 @@ namespace BarcodeOKSH
         private void AddObjectButton_Click(object sender, EventArgs e)
         {
             ObjectSearch rsform = new ObjectSearch(this);
-            rsform.ShowDialog();
+            rsform.Location = Screen.AllScreens[0].WorkingArea.Location;
+            rsform.Size = Screen.AllScreens[0].WorkingArea.Size;
+            
+            rsform.Show();
         }
         
         public void reserveHook(LendingObject obj)
@@ -58,12 +61,6 @@ namespace BarcodeOKSH
 
             Console.WriteLine("RelevantReservedcount   ", relevantreserved.Count.ToString());
 
-
-
-            
-
-
-
             if (ReserveFromTimePicker.Value > DateTime.Now && 
                 ReturnDateTimePicker.Value > DateTime.Now && 
                 SignatureTextBox.Text != "" && lendingObjects.Count>0 &&
@@ -86,7 +83,14 @@ namespace BarcodeOKSH
 
                 if (conflictingReservations.Count == 0)
                 {
-                    dataGetter.insertReservation(newres);
+                    ReservationConfirmForm RCF = new ReservationConfirmForm(newres);
+                    DialogResult res = RCF.ShowDialog();
+                    if (res == DialogResult.OK)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    
                 }
                 else
                 {
@@ -109,6 +113,11 @@ namespace BarcodeOKSH
         private void IDCancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void bindingSource1_CurrentChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

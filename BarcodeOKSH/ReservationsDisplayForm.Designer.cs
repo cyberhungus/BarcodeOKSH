@@ -113,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1481, 940);
+            this.ClientSize = new System.Drawing.Size(1711, 940);
             this.Controls.Add(this.OverwriteButton);
             this.Controls.Add(this.AcknowlegdeButton);
             this.Controls.Add(this.ReservationInfoLabel);

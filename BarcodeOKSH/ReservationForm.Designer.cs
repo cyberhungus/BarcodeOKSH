@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ReservationBox = new System.Windows.Forms.GroupBox();
             this.SignatureTextBox = new System.Windows.Forms.TextBox();
             this.SignatureLabel = new System.Windows.Forms.Label();
@@ -42,7 +43,9 @@
             this.ReturnDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.ConfirmLendButton = new System.Windows.Forms.Button();
             this.IDCancelButton = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.ReservationBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // ReservationBox
@@ -172,6 +175,10 @@
             this.IDCancelButton.UseVisualStyleBackColor = true;
             this.IDCancelButton.Click += new System.EventHandler(this.IDCancelButton_Click);
             // 
+            // bindingSource1
+            // 
+            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged);
+            // 
             // ReservationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
@@ -182,6 +189,7 @@
             this.Text = "Objekte vormerken";
             this.ReservationBox.ResumeLayout(false);
             this.ReservationBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -202,5 +210,6 @@
         private System.Windows.Forms.DateTimePicker ReserveFromTimePicker;
         private System.Windows.Forms.TextBox SignatureTextBox;
         private System.Windows.Forms.Label SignatureLabel;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

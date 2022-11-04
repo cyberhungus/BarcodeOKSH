@@ -143,6 +143,18 @@
       <DependentUpon>PersonSearch.cs</DependentUpon>
     </Compile>
     <Compile Include="Reservation.cs" />
+    <Compile Include="ReservationConfirmForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReservationConfirmForm.Designer.cs">
+      <DependentUpon>ReservationConfirmForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReservationDisplayElement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ReservationDisplayElement.Designer.cs">
+      <DependentUpon>ReservationDisplayElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReservationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +178,12 @@
       <DependentUpon>ReservationsDisplayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ReturnReserveEvent.cs" />
+    <Compile Include="RoomSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RoomSelect.Designer.cs">
+      <DependentUpon>RoomSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="SQLGetter.cs" />
     <Compile Include="CalendarElement.cs">
       <SubType>UserControl</SubType>
@@ -198,6 +216,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ReservationConfirmForm.resx">
+      <DependentUpon>ReservationConfirmForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReservationDisplayElement.resx">
+      <DependentUpon>ReservationDisplayElement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReservationForm.resx">
       <DependentUpon>ReservationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +231,9 @@
     <EmbeddedResource Include="CalendarElement.resx">
       <DependentUpon>CalendarElement.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RoomSelect.resx">
+      <DependentUpon>RoomSelect.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

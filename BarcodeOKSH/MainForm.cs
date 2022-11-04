@@ -33,8 +33,8 @@ namespace BarcodeOKSH
             LendBox.Visible = false;
             IDCancelButton.Visible = false;
             dataBaseConnector = new SQLGetter();
-            this.Location = Screen.AllScreens[1].WorkingArea.Location;
-            this.Size = Screen.AllScreens[1].WorkingArea.Size;
+            this.Location = Screen.AllScreens[0].WorkingArea.Location;
+            this.Size = Screen.AllScreens[0].WorkingArea.Size;
             this.WindowState = FormWindowState.Maximized;
         }
 
@@ -796,26 +796,26 @@ namespace BarcodeOKSH
                 activePerson = null;
                 clearLendingUI();
             }
+            else if (index == 5)
+            {
+                
+                clearRoomUI();
+            }
 
             else if (index == 2)
             {
                 //ShowOverdueButton.Text = "Zeige verspätete (" + dataBaseConnector.selectLateObjects().Count + ")";
-                ReservationDisplayListview.Items.Clear();
-                ReservationDisplayTimePicker.Value = DateTime.Now.AddDays(14).Date;
-                foreach (Reservation res in dataBaseConnector.selectReservationsActiveOnDate(ReservationDisplayTimePicker.Value))
-                {
-                    
-                        string[] row1 = {res.enddate.ToString(), res.borrower.getFullName(), res.objects.ToString(), res.staffmember };
-                        ReservationDisplayListview.Items.Add(res.startdate.ToString()).SubItems.AddRange(row1);
-                    
-                }
-                
 
-                
-                {
 
-                }
+
+                refreshReservation();
             }
+        }
+
+        private void clearRoomUI()
+        {
+            activePerson = null;
+            RoomSelect.Visible = false;
         }
 
         private List<ReturnReserveEvent> sortEventsByDate(List<ReturnReserveEvent> inp)
@@ -841,7 +841,19 @@ namespace BarcodeOKSH
         }
 
 
+        private void refreshReservation()
+        {
+            ReservationDisplayListview.Items.Clear();
+            ReservationDisplayTimePicker.Value = DateTime.Now.AddDays(14).Date;
+            foreach (Reservation res in dataBaseConnector.selectReservationsActiveOnDate(ReservationDisplayTimePicker.Value))
+            {
 
+                string[] row1 = { res.enddate.ToString(), res.borrower.getFullName(), res.objects.ToString(), res.staffmember };
+                ReservationDisplayListview.Items.Add(res.startdate.ToString()).SubItems.AddRange(row1);
+
+            }
+            ReservationUserIDTextBox.Text = "";
+        }
         private void DateSearchCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (DateSearchCheckBox.Checked == true)
@@ -971,7 +983,8 @@ namespace BarcodeOKSH
 
             if (checkIfUserExists(RoomBookingUserIDTextbox.Text))
             {
-             
+                activePerson = new SQLGetter().selectPersonByID(RoomBookingUserIDTextbox.Text)[0];
+                RoomSelect.Visible = true;
             }
         }
 
@@ -979,8 +992,14 @@ namespace BarcodeOKSH
         {
             if (checkIfUserExists(ReservationUserIDTextBox.Text))
             {
-                ReservationForm rsform = new ReservationForm(ReservationUserIDTextBox.Text);
-                rsform.ShowDialog();
+               ReservationForm rsform = new ReservationForm(ReservationUserIDTextBox.Text);
+               DialogResult reservationResult =  rsform.ShowDialog();
+
+                if (reservationResult == DialogResult.OK)
+                {
+                    MessageBox.Show("Reservierung erfolgreich", "ERFOLG");
+                    refreshReservation();
+                }
             }
             else
             {
@@ -998,6 +1017,11 @@ namespace BarcodeOKSH
 
         }
 
+        private void RoomSelectClick(object sender, EventArgs e)
+        {
+            Console.WriteLine("Clicked room selector");
+        }
+
         private void ReservationDisplayTimePicker_ValueChanged(object sender, EventArgs e)
         {
             ReservationDisplayListview.Items.Clear();
@@ -1006,9 +1030,8 @@ namespace BarcodeOKSH
             foreach (Reservation res in ress)
             {
 
-                string[] row1 = { res.enddate.ToString(), res.borrower.getFullName(), "OBJ", res.staffmember };
+                string[] row1 = { res.enddate.ToString(), res.borrower.getFullName(), res.objects.ToString(), res.staffmember };
                 ReservationDisplayListview.Items.Add(res.startdate.ToString()).SubItems.AddRange(row1);
-                Console.WriteLine("RESS COUNT " + "ADDED ITEM");
             }
         }
 

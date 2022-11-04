@@ -92,6 +92,7 @@ namespace BarcodeOKSH
             this.InventorySearchDropdown = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.Räume = new System.Windows.Forms.TabPage();
+            this.RoomSelect = new BarcodeOKSH.RoomSelect();
             this.BookingUserIDLabel = new System.Windows.Forms.Label();
             this.RoomBookingUserIDTextbox = new System.Windows.Forms.TextBox();
             this.RoomSelectButton = new System.Windows.Forms.Button();
@@ -127,6 +128,9 @@ namespace BarcodeOKSH
             this.LastNameLabel = new System.Windows.Forms.Label();
             this.FIrstNameLabel = new System.Windows.Forms.Label();
             this.PersonAddButton = new System.Windows.Forms.Button();
+            this.reservationDisplayElement1 = new BarcodeOKSH.ReservationDisplayElement();
+            this.calendarElement1 = new BarcodeOKSH.CalendarElement();
+            this.calendarElement2 = new BarcodeOKSH.CalendarElement();
             this.Root.SuspendLayout();
             this.Lend.SuspendLayout();
             this.LendBox.SuspendLayout();
@@ -550,6 +554,9 @@ namespace BarcodeOKSH
             // 
             // Calendar
             // 
+            this.Calendar.Controls.Add(this.calendarElement2);
+            this.Calendar.Controls.Add(this.calendarElement1);
+            this.Calendar.Controls.Add(this.reservationDisplayElement1);
             this.Calendar.Controls.Add(this.CalendarElement);
             this.Calendar.Location = new System.Drawing.Point(10, 48);
             this.Calendar.Name = "Calendar";
@@ -701,6 +708,7 @@ namespace BarcodeOKSH
             // 
             // Räume
             // 
+            this.Räume.Controls.Add(this.RoomSelect);
             this.Räume.Controls.Add(this.BookingUserIDLabel);
             this.Räume.Controls.Add(this.RoomBookingUserIDTextbox);
             this.Räume.Controls.Add(this.RoomSelectButton);
@@ -710,6 +718,13 @@ namespace BarcodeOKSH
             this.Räume.TabIndex = 5;
             this.Räume.Text = "Räume";
             this.Räume.UseVisualStyleBackColor = true;
+            // 
+            // RoomSelect
+            // 
+            this.RoomSelect.Location = new System.Drawing.Point(19, 195);
+            this.RoomSelect.Name = "RoomSelect";
+            this.RoomSelect.Size = new System.Drawing.Size(1906, 1184);
+            this.RoomSelect.TabIndex = 3;
             // 
             // BookingUserIDLabel
             // 
@@ -1026,6 +1041,30 @@ namespace BarcodeOKSH
             this.PersonAddButton.UseVisualStyleBackColor = true;
             this.PersonAddButton.Click += new System.EventHandler(this.PersonAddButton_Click);
             // 
+            // reservationDisplayElement1
+            // 
+            this.reservationDisplayElement1.AutoSize = true;
+            this.reservationDisplayElement1.Location = new System.Drawing.Point(11, 11);
+            this.reservationDisplayElement1.Name = "reservationDisplayElement1";
+            this.reservationDisplayElement1.Size = new System.Drawing.Size(780, 879);
+            this.reservationDisplayElement1.TabIndex = 8;
+            // 
+            // calendarElement1
+            // 
+            this.calendarElement1.AutoSize = true;
+            this.calendarElement1.Location = new System.Drawing.Point(0, 0);
+            this.calendarElement1.Name = "calendarElement1";
+            this.calendarElement1.Size = new System.Drawing.Size(3844, 1928);
+            this.calendarElement1.TabIndex = 9;
+            // 
+            // calendarElement2
+            // 
+            this.calendarElement2.AutoSize = true;
+            this.calendarElement2.Location = new System.Drawing.Point(0, 0);
+            this.calendarElement2.Name = "calendarElement2";
+            this.calendarElement2.Size = new System.Drawing.Size(3844, 1928);
+            this.calendarElement2.TabIndex = 10;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
@@ -1181,6 +1220,10 @@ namespace BarcodeOKSH
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader23;
+        private RoomSelect RoomSelect;
+        private CalendarElement calendarElement2;
+        private CalendarElement calendarElement1;
+        private ReservationDisplayElement reservationDisplayElement1;
     }
 
 
